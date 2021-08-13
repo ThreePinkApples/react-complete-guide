@@ -1,7 +1,6 @@
 import "./ExpenseFilter.css";
 
 export default function ExpensesFilter(props) {
-  const defaultYear = new Date().getFullYear();
   const filterHandler = (event) => {
     console.log(event.target.value);
     props.filterOnYear(event.target.value);
@@ -11,7 +10,8 @@ export default function ExpensesFilter(props) {
     <div className="expenses-filter">
       <div className="expenses-filter__control">
         <label>Filter by year</label>
-        <select onChange={filterHandler} defaultValue={defaultYear}>
+        <select onChange={filterHandler} defaultValue={""}>
+          <option value="">Select year</option>
           <option value="2023">2023</option>
           <option value="2022">2022</option>
           <option value="2021">2021</option>
