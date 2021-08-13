@@ -3,7 +3,6 @@ import Card from "../Wrappers/Card/Card";
 import ExpenseDate from "./ExpenseDate";
 import "./ExpenseItem.css";
 
-
 export default function ExpenseItem(props) {
   const item = props.item;
 
