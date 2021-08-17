@@ -2,7 +2,6 @@ import "./ExpenseFilter.css";
 
 export default function ExpensesFilter(props) {
   const filterHandler = (event) => {
-    console.log(event.target.value);
     props.filterOnYear(event.target.value);
   };
 
