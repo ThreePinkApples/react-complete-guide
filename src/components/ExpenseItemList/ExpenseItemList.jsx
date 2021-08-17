@@ -16,19 +16,17 @@ export default function ExpenseItemList(props) {
   };
 
   return (
-    <div>
+    <Card className="expense-item-list">
       <ExpenseFilter filterOnYear={filterOnYear} />
-      <Card className="expense-item-list">
-        {items
-          .filter(
-            (expense) =>
-              filterYear === "" || expense.date.getFullYear() === filterYear
-          )
-          .sort((a, b) => (a.date < b.date ? 1 : -1))
-          .map((item) => (
-            <ExpenseItem item={item} key={item.id} />
-          ))}
-      </Card>
-    </div>
+      {items
+        .filter(
+          (expense) =>
+            filterYear === "" || expense.date.getFullYear() === filterYear
+        )
+        .sort((a, b) => (a.date < b.date ? 1 : -1))
+        .map((item) => (
+          <ExpenseItem item={item} key={item.id} />
+        ))}
+    </Card>
   );
 }
