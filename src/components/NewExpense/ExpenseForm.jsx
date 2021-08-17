@@ -26,6 +26,7 @@ export default function ExpenseForm(props) {
       return { ...prevState, date: new Date(event.target.value) };
     });
   };
+  const dateValue = (formData.date !== "" && formData.date.toISOString().split("T")[0]) || "";
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -60,14 +61,13 @@ export default function ExpenseForm(props) {
             type="date"
             min="2020-01-01"
             max="2023-12-31"
-            value={
-              (formData.date !== "" && formData.date.toISOString().split("T")[0]) || ""
-            }
+            value={dateValue}
             onChange={dateChangeHandler}
           />
         </div>
       </div>
       <div className="new-expense__actions">
+        <button type="button" onClick={props.onCancel}>Cancel</button>
         <button type="submit">Add expense</button>
       </div>
     </form>

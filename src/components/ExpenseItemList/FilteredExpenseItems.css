@@ -1,0 +1,9 @@
+.filtered-expense-items {
+  list-style: none;
+  padding: 0;
+}
+
+.filtered-expense-items__fallback {
+  color: white;
+  text-align: center;
+}
