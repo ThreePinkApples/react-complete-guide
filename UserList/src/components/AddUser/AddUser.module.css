@@ -1,8 +1,6 @@
 .input {
-  margin: 2rem auto;
-  padding: 1rem;
-  width: 90%;
-  max-width: 40rem;
+  margin: 1rem auto;
+  padding: 0.1rem 1rem;
 }
 
 .input label {

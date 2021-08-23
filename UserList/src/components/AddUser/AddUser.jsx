@@ -41,7 +41,9 @@ export default function AddUser(props) {
           <label>Age (years)</label>
           <input type="number" onChange={onAgeChange} value={age} />
         </div>
-        <Button type="submit" onClick={addUser} label={"Add User"} />
+        <div className={styles.input}>
+          <Button type="submit" onClick={addUser} label={"Add User"} />
+        </div>
       </form>
     </Card>
   );
