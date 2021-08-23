@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AddUser from "./components/AddUser/AddUser";
 import UserList from "./components/UserList/UserList";
 
