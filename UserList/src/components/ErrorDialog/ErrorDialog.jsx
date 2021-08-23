@@ -1,11 +1,10 @@
-import Wrapper from "../Helpers/Wrapper";
 import Button from "../UI/Button/Button";
 import Card from "../UI/Card/Card";
 import styles from "./ErrorDialog.module.css";
 
 export default function ErrorDialog(props) {
   return (
-    <Wrapper>
+    <>
       <div className={styles.backdrop} onClick={props.onConfirm} />
       <Card className={styles.modal}>
         <header className={styles.header}>
@@ -18,6 +17,6 @@ export default function ErrorDialog(props) {
           <Button onClick={props.onConfirm} type="button" label="Okay"></Button>
         </footer>
       </Card>
-    </Wrapper>
+    </>
   );
 }
