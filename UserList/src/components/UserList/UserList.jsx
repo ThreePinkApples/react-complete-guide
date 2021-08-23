@@ -6,11 +6,12 @@ export default function UserList(props) {
   if (!users || users.length === 0) {
       return null;
   }
+
   return (
-    <Card>
-      <ul className={styles["user-list"]}>
+    <Card className={styles.users}>
+      <ul>
         {users.map((user) => (
-            <li>
+            <li key={user.id}>
               {user.username} ({user.age} years old)
             </li>
           ))}

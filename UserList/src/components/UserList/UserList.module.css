@@ -1,12 +1,16 @@
-.user-list {
-  margin: 1rem auto;
-  list-style-type: none;
-  padding: 1rem;
+.users {
+  margin: 2rem auto;
+  width: 90%;
   max-width: 40rem;
 }
 
-.user-list li {
-  border: 1px solid grey;
+.users ul {
+  list-style: none;
   padding: 1rem;
-  margin-bottom: 10px;
+}
+
+.users li {
+  border: 1px solid #ccc;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
 }
