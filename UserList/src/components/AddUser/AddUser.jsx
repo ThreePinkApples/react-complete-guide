@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "../UI/Button/Button";
 import styles from "./AddUser.module.css";
 
 export default function AddUser(props) {
@@ -38,7 +39,7 @@ export default function AddUser(props) {
         <label>Age (years)</label>
         <input type="number" onChange={onAgeChange} value={age} />
       </div>
-      <button type="submit" onClick={addUser} >Add User</button>
+      <Button type="submit" onClick={addUser} label={"Add User"} />
     </form>
   );
 }
