@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ErrorDialog from "../ErrorDialog/ErrorDialog";
+import Wrapper from "../Helpers/Wrapper";
 import Button from "../UI/Button/Button";
 import Card from "../UI/Card/Card";
 import styles from "./AddUser.module.css";
@@ -52,7 +53,7 @@ export default function AddUser(props) {
   };
 
   return (
-    <div>
+    <Wrapper>
       {error && (
         <ErrorDialog
           title={error.title}
@@ -74,6 +75,6 @@ export default function AddUser(props) {
           <Button type="submit" label="Add User" />
         </form>
       </Card>
-    </div>
+    </Wrapper>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AddUser from "./components/AddUser/AddUser";
+import Wrapper from "./components/Helpers/Wrapper";
 import UserList from "./components/UserList/UserList";
 
 export default function App() {
@@ -15,9 +16,9 @@ export default function App() {
   };
 
   return (
-    <div>
+    <Wrapper>
       <AddUser addUser={addUser} />
       <UserList users={users} />
-    </div>
+    </Wrapper>
   );
 }
