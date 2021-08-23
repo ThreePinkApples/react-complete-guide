@@ -1,3 +1,3 @@
 export default function Wrapper(props) {
-    return props.children;
+  return props.children;
 }

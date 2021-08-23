@@ -7,8 +7,8 @@ export default function App() {
   const addUser = (user) => {
     const newUser = {
       ...user,
-      id: Math.random()
-    }
+      id: Math.random(),
+    };
     setUsers((prevState) => {
       return [...prevState, newUser];
     });
