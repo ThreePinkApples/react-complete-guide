@@ -4,7 +4,7 @@ import styles from "./HeaderCartButton.module.css";
 export default function HeaderCartButton(props) {
   const numberOfItems = props.numberOfItems || "Error";
   return (
-    <button className={styles.button}>
+    <button className={styles.button} onClick={props.openCart}>
       <span className={styles.icon}>
         <CartIcon />
       </span>

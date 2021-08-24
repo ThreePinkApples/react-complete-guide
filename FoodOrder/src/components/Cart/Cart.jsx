@@ -15,7 +15,7 @@ export default function Cart(props) {
         <span>{15.99 * 4}</span>
       </div>
       <div className={styles.actions}>
-        <button className={styles["button--alt"]}>Close</button>
+        <button className={styles["button--alt"]} onClick={props.onClose}>Close</button>
         <button className={styles.button}>Order</button>
       </div>
     </Modal>
