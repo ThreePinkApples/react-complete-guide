@@ -8,7 +8,7 @@ export default function Cart(props) {
   const cartListItems = items.map((item) => <li>{item.name}</li>);
 
   return (
-    <Modal>
+    <Modal onBackdropClick={props.onClose}>
       <ul className={styles["cart-items"]}>{cartListItems}</ul>
       <div className={styles.total}>
         <span>Total Amount</span>

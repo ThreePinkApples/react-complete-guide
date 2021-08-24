@@ -15,9 +15,9 @@ export default function App() {
 
   return (
     <>
+      {cartOpen && <Cart onClose={closeCart} />}
       <Header openCart={openCart} />
       <main>
-        {cartOpen && <Cart onClose={closeCart} />}
         <Meals />
       </main>
     </>
