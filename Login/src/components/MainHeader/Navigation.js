@@ -1,8 +1,6 @@
-import React from 'react';
+import classes from "./Navigation.module.css";
 
-import classes from './Navigation.module.css';
-
-const Navigation = (props) => {
+export default function Navigation(props) {
   return (
     <nav className={classes.nav}>
       <ul>
@@ -24,6 +22,4 @@ const Navigation = (props) => {
       </ul>
     </nav>
   );
-};
-
-export default Navigation;
+}
