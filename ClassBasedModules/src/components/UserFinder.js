@@ -1,14 +1,11 @@
 import { Component } from "react";
 import styles from "./UserFinder.module.css";
 import Users from "./Users";
-
-const DUMMY_USERS = [
-  { id: "u1", name: "Max" },
-  { id: "u2", name: "Manuel" },
-  { id: "u3", name: "Julie" },
-];
+import UsersContext from "../store/user-context";
 
 export default class UserFinder extends Component {
+  static contextType = UsersContext;
+
   constructor() {
     super();
     this.state = {
@@ -18,7 +15,7 @@ export default class UserFinder extends Component {
   }
 
   componentDidMount() {
-    this.setState({ filteredUsers: DUMMY_USERS });
+    this.setState({ filteredUsers: this.context.users });
   }
 
   render() {
@@ -39,7 +36,7 @@ export default class UserFinder extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchTerm !== this.state.searchTerm) {
       this.setState({
-        filteredUsers: DUMMY_USERS.filter((user) =>
+        filteredUsers: this.context.users.filter((user) =>
           user.name.toLowerCase().includes(this.state.searchTerm)
         ),
       });
