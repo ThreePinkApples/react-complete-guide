@@ -2,6 +2,7 @@ import { Component } from "react";
 import styles from "./UserFinder.module.css";
 import Users from "./Users";
 import UsersContext from "../store/user-context";
+import ErrorBoundary from "./ErrorBoundary";
 
 export default class UserFinder extends Component {
   static contextType = UsersContext;
@@ -24,7 +25,9 @@ export default class UserFinder extends Component {
         <div className={styles.finder}>
           <input type="search" onChange={this.search.bind(this)} />
         </div>
-        <Users users={this.state.filteredUsers} />
+        <ErrorBoundary>
+          <Users users={this.state.filteredUsers} />
+        </ErrorBoundary>
       </>
     );
   }
