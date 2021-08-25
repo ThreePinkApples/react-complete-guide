@@ -12,9 +12,13 @@ export default class UserFinder extends Component {
   constructor() {
     super();
     this.state = {
-      filteredUsers: DUMMY_USERS,
+      filteredUsers: [],
       searchTerm: "",
     };
+  }
+
+  componentDidMount() {
+    this.setState({ filteredUsers: DUMMY_USERS });
   }
 
   render() {

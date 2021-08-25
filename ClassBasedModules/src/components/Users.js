@@ -21,7 +21,7 @@ export default class Users extends Component {
 
     return (
       <div className={styles.users}>
-        <button onClick={this.toggleUsers}>
+        <button onClick={this.toggleUsers.bind(this)}>
           {this.state.showUsers ? "Hide" : "Show"} Users
         </button>
         {this.state.showUsers && usersList}
