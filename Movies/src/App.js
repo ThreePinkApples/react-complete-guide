@@ -7,26 +7,27 @@ function App() {
   const [moviesLoading, setMoviesLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState("");
+  const firebaseUrl =
+    "https://udemyreactmovies-default-rtdb.europe-west1.firebasedatabase.app";
 
   const fetchMovies = useCallback(async () => {
     setError("");
     setMoviesLoading(true);
     try {
-      const response = await fetch("https://swapi.dev/api/films/");
+      const response = await fetch(firebaseUrl + "/movies.json");
       if (!response.ok) {
         throw new Error("Response error " + response.status);
       }
       const data = await response.json();
-      setMovies(
-        data.results.map((movie) => {
-          return {
-            id: movie.episode_id,
-            title: movie.title,
-            releaseDate: movie.release_date,
-            openingText: movie.opening_crawl,
-          };
-        })
-      );
+      const mappedMovies = Object.keys(data).map((key) => {
+        return {
+          id: key,
+          title: data[key].title,
+          releaseDate: new Date(data[key].releaseDate),
+          openingText: data[key].openingText,
+        };
+      });
+      setMovies(mappedMovies.sort((a, b) => b.releaseDate - a.releaseDate));
     } catch (error) {
       setError(error.message);
     } finally {
@@ -38,8 +39,16 @@ function App() {
     fetchMovies();
   }, [fetchMovies]);
 
-  function addMovie(movie) {
-    console.log(movie);
+  async function addMovie(movie) {
+    const response = await fetch(firebaseUrl + "/movies.json", {
+      method: "POST",
+      body: JSON.stringify(movie),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
   }
 
   let content = <p>Found no movies.</p>;
