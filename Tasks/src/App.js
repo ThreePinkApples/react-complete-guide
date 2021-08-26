@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import NewTask from "./components/NewTask/NewTask";
 import Tasks from "./components/Tasks/Tasks";
 import useHttp from "./hooks/use-https";
@@ -8,28 +8,28 @@ function App() {
   const firebaseUrl =
     "https://udemyreactmovies-default-rtdb.europe-west1.firebasedatabase.app";
   const databaseUrl = firebaseUrl + "/tasks.json";
-  const { isLoading, error, sendRequest } = useHttp(
-    {
-      url: databaseUrl,
-    },
-    (responseData) => {
-      const loadedTasks = [];
+  const { isLoading, error, sendRequest } = useHttp();
 
-      for (const taskKey in responseData) {
-        loadedTasks.push({ id: taskKey, text: responseData[taskKey].text });
+  const fetchTasks = useCallback(async () => {
+    sendRequest(
+      {
+        url: databaseUrl,
+      },
+      (responseData) => {
+        const loadedTasks = [];
+
+        for (const taskKey in responseData) {
+          loadedTasks.push({ id: taskKey, text: responseData[taskKey].text });
+        }
+
+        setTasks(loadedTasks);
       }
-
-      setTasks(loadedTasks);
-    }
-  );
-
-  const fetchTasks = async () => {
-    sendRequest();
-  };
+    );
+  }, [databaseUrl, sendRequest]);
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [fetchTasks]);
 
   const addTask = (task) => {
     setTasks((prevTasks) => prevTasks.concat(task));
