@@ -3,36 +3,48 @@ import { useRef, useState } from "react";
 const SimpleInput = (props) => {
   const nameRef = useRef();
   const [name, setName] = useState("");
-  const [nameIsValid, setNameIsValid] = useState(true);
+  const [nameIsValid, setNameIsValid] = useState(false);
+  const [nameTouched, setNameTouched] = useState(false);
+  const showError = nameTouched && !nameIsValid;
+
+  const isNameValid = (name) => name.trim() !== "";
 
   function onNameChange(event) {
+    setNameTouched(true);
     setName(event.target.value);
+    if (!nameIsValid && showError) {
+      setNameIsValid(isNameValid(event.target.value));
+    }
+  }
+
+  function onNameBlur(event) {
+    setNameTouched(true);
+    setNameIsValid(isNameValid(event.target.value));
   }
 
   function submitForm(event) {
     event.preventDefault();
-    if (name.trim() === "") {
+    setNameTouched(true);
+    if (!isNameValid(name)) {
       setNameIsValid(false);
-      console.log("No!");
       return;
     }
     setNameIsValid(true);
-    console.log(name);
-    console.log(nameRef.current.value);
   }
 
   return (
     <form onSubmit={submitForm}>
-      <div className={`form-control ${!nameIsValid ? "invalid" : ""}`}>
+      <div className={`form-control ${showError ? "invalid" : ""}`}>
         <label htmlFor="name">Your Name</label>
         <input
           type="text"
           id="name"
           value={name}
           onChange={onNameChange}
+          onBlur={onNameBlur}
           ref={nameRef}
         />
-        {!nameIsValid && <p className="error-text">Name must not be empty</p>}
+        {showError && <p className="error-text">Name must not be empty</p>}
       </div>
       <div className="form-actions">
         <button type="submit">Submit</button>
