@@ -1,29 +1,36 @@
+import { useState } from "react";
 import "./App.css";
 import MoviesList from "./components/MoviesList";
 
 function App() {
-  const dummyMovies = [
-    {
-      id: 1,
-      title: "Some Dummy Movie",
-      openingText: "This is the opening text of the movie",
-      releaseDate: "2021-05-18",
-    },
-    {
-      id: 2,
-      title: "Some Dummy Movie 2",
-      openingText: "This is the second opening text of the movie",
-      releaseDate: "2021-05-19",
-    },
-  ];
+  const [moviesLoading, setMoviesLoading] = useState(false);
+  const [movies, setMovies] = useState([]);
+
+  async function fetchMovies() {
+    setMoviesLoading(true);
+    const response = await fetch("https://swapi.dev/api/films/");
+    const data = await response.json();
+    setMovies(
+      data.results.map((movie) => {
+        return {
+          id: movie.episode_id,
+          title: movie.title,
+          releaseDate: movie.release_date,
+          openingText: movie.opening_crawl,
+        };
+      })
+    );
+    setMoviesLoading(false);
+  }
 
   return (
     <>
       <section>
-        <button>Fetch Movies</button>
+        <button onClick={fetchMovies}>Fetch Movies</button>
       </section>
       <section>
-        <MoviesList movies={dummyMovies} />
+        {moviesLoading && <p>Fetching movies...</p>}
+        {!moviesLoading && <MoviesList movies={movies} />}
       </section>
     </>
   );
