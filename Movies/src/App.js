@@ -11,7 +11,7 @@ function App() {
     setError("");
     setMoviesLoading(true);
     try {
-      const response = await fetch("https://swapi.dev/api/film/");
+      const response = await fetch("https://swapi.dev/api/films/");
       if (!response.ok) {
         throw new Error("Response error " + response.status);
       }
@@ -26,11 +26,20 @@ function App() {
           };
         })
       );
-    } catch(error) {
+    } catch (error) {
       setError(error.message);
     } finally {
       setMoviesLoading(false);
     }
+  }
+
+  let content = <p>Found no movies.</p>;
+  if (error) {
+    content = <p>{error}</p>
+  } else if (moviesLoading) {
+    content = <p>Fetching movies...</p>;
+  } else if (movies.length > 0) {
+    content = <MoviesList movies={movies} />
   }
 
   return (
@@ -39,9 +48,7 @@ function App() {
         <button onClick={fetchMovies}>Fetch Movies</button>
       </section>
       <section>
-        {moviesLoading && <p>Fetching movies...</p>}
-        {!moviesLoading && !error && <MoviesList movies={movies} />}
-        {!moviesLoading && error && <p>{error}</p>}
+        {content}
       </section>
     </>
   );
