@@ -29,10 +29,6 @@ export default function Cart(props) {
     setShouldShowCheckout(true);
   };
 
-  const hideCheckout = () => {
-    setShouldShowCheckout(false);
-  }
-
   const onClose = () => {
     setShouldShowCheckout(false);
     props.onClose();
@@ -61,7 +57,7 @@ export default function Cart(props) {
         onClick={showCheckout}
         disabled={!hasItems}
       >
-        Order
+        Checkout
       </button>
     </div>
   );
@@ -74,7 +70,7 @@ export default function Cart(props) {
         <span>{totalAmount}</span>
       </div>
       {!shouldShowCheckout && actions }
-      {shouldShowCheckout && <Checkout onCancel={hideCheckout} />}
+      {shouldShowCheckout && <Checkout onCancel={onClose} />}
     </Modal>
   );
 }
