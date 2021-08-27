@@ -40,16 +40,21 @@ export default function Cart(props) {
   const placeOrder = (customerInfo) => {
     const order = {
       customer: customerInfo,
-      item: cartContext.items,
-      totalAmount: totalAmount
+      meals: cartContext.items.map((item) => {
+        return { id: item.id, amount: item.amount };
+      }),
+      totalAmount: parseFloat(cartContext.totalAmount.toFixed(2)),
     };
-    sendRequest({
-      url: props.ordersUrl,
-      method: "POST",
-      body: order
-    }, (respondData) => {
-      console.log(respondData);
-    })
+    sendRequest(
+      {
+        url: props.ordersUrl,
+        method: "POST",
+        body: order,
+      },
+      (respondData) => {
+        console.log(respondData);
+      }
+    );
   };
 
   const cartListItems = items.map((item) => (
