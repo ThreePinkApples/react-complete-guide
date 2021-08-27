@@ -1,11 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CartContext from "../../store/cart-context";
 import Modal from "../UI/Modal/Modal";
 import styles from "./Cart.module.css";
 import CartItem from "./CartItem/CartItem";
+import Checkout from "./Checkout/Checkout";
 
 export default function Cart(props) {
   const cartContext = useContext(CartContext);
+  const [shouldShowCheckout, setShouldShowCheckout] = useState(false);
   const items = cartContext.items || [
     { id: "c1", name: "Barbecue Sushi", amount: 4, price: 15.99 },
   ];
@@ -13,15 +15,28 @@ export default function Cart(props) {
   const hasItems = items.length > 0;
 
   const addToCart = (item) => {
-      cartContext.addItem({
-          ...item,
-          amount: 1
-      })
-  }
+    cartContext.addItem({
+      ...item,
+      amount: 1,
+    });
+  };
 
   const removeFromCart = (itemId) => {
-      cartContext.removeItem(itemId);
+    cartContext.removeItem(itemId);
+  };
+
+  const showCheckout = () => {
+    setShouldShowCheckout(true);
+  };
+
+  const hideCheckout = () => {
+    setShouldShowCheckout(false);
   }
+
+  const onClose = () => {
+    setShouldShowCheckout(false);
+    props.onClose();
+  };
 
   const cartListItems = items.map((item) => (
     <CartItem
@@ -36,21 +51,30 @@ export default function Cart(props) {
     </CartItem>
   ));
 
+  const actions = (
+    <div className={styles.actions}>
+      <button className={styles["button--alt"]} onClick={onClose}>
+        Close
+      </button>
+      <button
+        className={styles.button}
+        onClick={showCheckout}
+        disabled={!hasItems}
+      >
+        Order
+      </button>
+    </div>
+  );
+
   return (
-    <Modal onBackdropClick={props.onClose}>
+    <Modal onBackdropClick={onClose}>
       <ul className={styles["cart-items"]}>{cartListItems}</ul>
       <div className={styles.total}>
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      <div className={styles.actions}>
-        <button className={styles["button--alt"]} onClick={props.onClose}>
-          Close
-        </button>
-        <button className={styles.button} disabled={!hasItems}>
-          Order
-        </button>
-      </div>
+      {!shouldShowCheckout && actions }
+      {shouldShowCheckout && <Checkout onCancel={hideCheckout} />}
     </Modal>
   );
 }
