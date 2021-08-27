@@ -5,6 +5,7 @@ export default function useHttp() {
   const [isLoading, setIsLoading] = useState(false);
 
   const sendRequest = useCallback(async (requestConfig, callback) => {
+    setError("");
     try {
       setIsLoading(true);
       const response = await fetch(requestConfig.url, {

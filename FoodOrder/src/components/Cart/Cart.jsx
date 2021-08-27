@@ -45,7 +45,7 @@ export default function Cart(props) {
         return { id: item.id, amount: item.amount };
       }),
       totalAmount: parseFloat(cartContext.totalAmount.toFixed(2)),
-      time: new Date().toISOString()
+      time: new Date().toISOString(),
     };
     sendRequest(
       {
@@ -54,12 +54,13 @@ export default function Cart(props) {
         body: order,
       },
       (respondData) => {
-        console.log(respondData);
+        setDidSubmit(true);
+        if (!httpError) {
+          setShouldShowCheckout(false);
+          cartContext.clearCart();
+        }
       }
     );
-    setDidSubmit(true);
-    setShouldShowCheckout(false);
-    cartContext.clearCart();
   };
 
   const cartListItems = items.map((item) => (
@@ -109,9 +110,10 @@ export default function Cart(props) {
 
   return (
     <Modal onBackdropClick={onClose}>
-      {!httpIsLoading && !didSubmit && modalContent}
+      {httpError && <p>Failed to place order! Please try again. {httpError}</p>}
+      {!httpIsLoading && (!didSubmit || httpError) && modalContent}
       {httpIsLoading && isSubmittingContent}
-      {!httpIsLoading && didSubmit && didSubmitContent}
+      {!httpIsLoading && didSubmit && !httpError && didSubmitContent}
     </Modal>
   );
 }
