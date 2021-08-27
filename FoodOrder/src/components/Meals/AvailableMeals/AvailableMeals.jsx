@@ -39,7 +39,7 @@ export default function AvailableMeals(props) {
       <Card>
         {!httpIsLoading && !httpError && <ul>{mealsList}</ul>}
         {httpIsLoading && <p>Loading meals...</p>}
-        {httpError && <p>Failed to load meals. Error: {httpError}</p>}
+        {httpError && <p className={styles["error-text"]}>Failed to load meals. Error: {httpError}</p>}
       </Card>
     </section>
   );
