@@ -7,16 +7,19 @@ import styles from "./AvailableMeals.module.css";
 export default function AvailableMeals(props) {
   const { sendRequest, isLoading: httpIsLoading, error: httpError } = useHttp();
   const [meals, setMeals] = useState([]);
-  useEffect(() => {
-    sendRequest({ url: props.mealsUrl }, (responseData) => {
-      const mappedData = Object.keys(responseData).map((key) => {
-        return {
-          ...responseData[key],
-          id: key,
-        };
-      });
-      setMeals(mappedData);
+
+  function mapMealData(mealData) {
+    const mappedData = Object.keys(mealData).map((key) => {
+      return {
+        ...mealData[key],
+        id: key,
+      };
     });
+    setMeals(mappedData);
+  }
+
+  useEffect(() => {
+    sendRequest({ url: props.mealsUrl }, mapMealData);
   }, [props.mealsUrl, sendRequest]);
 
   const mealsList = meals.map((meal) => {
