@@ -4,6 +4,9 @@ import Header from "./components/Layout/Header/Header";
 import Meals from "./components/Meals/Meals";
 import CartProvider from "./store/CartProvider";
 
+const firebaseUrl = "https://udemyreactmovies-default-rtdb.europe-west1.firebasedatabase.app";
+const mealsUrl = `${firebaseUrl}/meals.json`;
+
 export default function App() {
   const [cartOpen, setCartOpen] = useState(false);
   const openCart = () => {
@@ -19,7 +22,7 @@ export default function App() {
       {cartOpen && <Cart onClose={closeCart} />}
       <Header openCart={openCart} />
       <main>
-        <Meals />
+        <Meals mealsUrl={mealsUrl} />
       </main>
     </CartProvider>
   );
