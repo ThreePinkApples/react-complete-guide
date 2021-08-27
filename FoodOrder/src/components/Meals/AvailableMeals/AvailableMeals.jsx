@@ -8,8 +8,14 @@ export default function AvailableMeals(props) {
   const { sendRequest, isLoading: httpIsLoading, error: httpError } = useHttp();
   const [meals, setMeals] = useState([]);
   useEffect(() => {
-    sendRequest({ url: props.mealsUrl }, (data) => {
-      setMeals(data);
+    sendRequest({ url: props.mealsUrl }, (responseData) => {
+      const mappedData = Object.keys(responseData).map((key) => {
+        return {
+          ...responseData[key],
+          id: key,
+        };
+      });
+      setMeals(mappedData);
     });
   }, [props.mealsUrl, sendRequest]);
 
