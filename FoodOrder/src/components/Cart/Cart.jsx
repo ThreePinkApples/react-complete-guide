@@ -45,6 +45,7 @@ export default function Cart(props) {
         return { id: item.id, amount: item.amount };
       }),
       totalAmount: parseFloat(cartContext.totalAmount.toFixed(2)),
+      time: new Date().toISOString()
     };
     sendRequest(
       {
