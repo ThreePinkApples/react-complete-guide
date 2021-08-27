@@ -5,6 +5,24 @@ const checkNotEmpty = (value) => value.trim() !== "";
 const numberRegex = new RegExp("^\\d+$");
 const checkOnlyNumbers = numberRegex.test.bind(numberRegex);
 
+const CheckoutInput = (props) => {
+  return (
+    <div
+      className={`${styles.control} ${props.hasError ? styles.invalid : ""}`}
+    >
+      <label htmlFor={props.id}>{props.label}</label>
+      <input
+        type="text"
+        id={props.id}
+        value={props.value}
+        onChange={props.onChange}
+        onBlur={props.onBlur}
+      />
+      {props.hasError && <p>{props.errorMessage}</p>}
+    </div>
+  );
+};
+
 export default function Checkout(props) {
   const {
     value: name,
@@ -42,7 +60,8 @@ export default function Checkout(props) {
     reset: resetCity,
   } = useInput(checkNotEmpty);
 
-  const isFormValid = cityIsValid && postalCodeIsValid && streetIsValid && nameIsValid;
+  const isFormValid =
+    cityIsValid && postalCodeIsValid && streetIsValid && nameIsValid;
 
   const submitForm = (event) => {
     event.preventDefault();
@@ -57,56 +76,42 @@ export default function Checkout(props) {
 
   return (
     <form onSubmit={submitForm} className={styles.form}>
-      <div
-        className={`${styles.control} ${nameHasError ? styles.invalid : ""}`}
-      >
-        <label htmlFor="name">Your Name</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={onNameChange}
-          onBlur={onNameBlur}
-        />
-        {nameHasError && <p>Name can not be empty</p>}
-      </div>
-      <div
-        className={`${styles.control} ${streetHasError ? styles.invalid : ""}`}
-      >
-        <label htmlFor="street">Street</label>
-        <input
-          type="text"
-          id="street"
-          value={street}
-          onChange={onStreetChange}
-          onBlur={onStreetBlur}
-        />
-        {streetHasError && <p>Street can not be empty</p>}
-      </div>
-      <div className={`${styles.control} ${postalCodeHasError ? styles.invalid : ""}`}>
-        <label htmlFor="postal">Postal code</label>
-        <input
-          type="text"
-          id="postal"
-          value={postalCode}
-          onChange={onPostalCodeChange}
-          onBlur={onPostalCodeBlur}
-        />
-        {postalCodeHasError && <p>Postal Code must not be empty and only contain numbers</p>}
-      </div>
-      <div
-        className={`${styles.control} ${cityHasError ? styles.invalid : ""}`}
-      >
-        <label htmlFor="city">City</label>
-        <input
-          type="text"
-          id="city"
-          value={city}
-          onChange={onCityChange}
-          onBlur={onCityBlur}
-        />
-        {cityHasError && <p>City can not be empty</p>}
-      </div>
+      <CheckoutInput
+        id="name"
+        label="Your Name"
+        value={name}
+        onChange={onNameChange}
+        onBlur={onNameBlur}
+        hasError={nameHasError}
+        errorMessage="Name can not be empty"
+      />
+      <CheckoutInput
+        id="street"
+        label="Street"
+        value={street}
+        onChange={onStreetChange}
+        onBlur={onStreetBlur}
+        hasError={streetHasError}
+        errorMessage="Street can not be empty"
+      />
+      <CheckoutInput
+        id="postal"
+        label="Postal Code"
+        value={postalCode}
+        onChange={onPostalCodeChange}
+        onBlur={onPostalCodeBlur}
+        hasError={postalCodeHasError}
+        errorMessage="Postal Code must not be empty and only contain numbers"
+      />
+      <CheckoutInput
+        id="city"
+        label="City"
+        value={city}
+        onChange={onCityChange}
+        onBlur={onCityBlur}
+        hasError={cityHasError}
+        errorMessage="City can not be empty"
+      />
       <div className={styles.actions}>
         <button type="button" onClick={props.onCancel}>
           Cancel
