@@ -37,7 +37,9 @@ const SimpleInput = (props) => {
       return;
     }
     setName("");
+    setEmail("");
     setNameTouched(false);
+    setEmailTouched(false);
   }
 
   return (
