@@ -9,6 +9,7 @@ import Checkout from "./Checkout/Checkout";
 export default function Cart(props) {
   const cartContext = useContext(CartContext);
   const [shouldShowCheckout, setShouldShowCheckout] = useState(false);
+  const [didSubmit, setDidSubmit] = useState(false);
   const items = cartContext.items || [
     { id: "c1", name: "Barbecue Sushi", amount: 4, price: 15.99 },
   ];
@@ -55,6 +56,9 @@ export default function Cart(props) {
         console.log(respondData);
       }
     );
+    setDidSubmit(true);
+    setShouldShowCheckout(false);
+    cartContext.clearCart();
   };
 
   const cartListItems = items.map((item) => (
@@ -85,8 +89,8 @@ export default function Cart(props) {
     </div>
   );
 
-  return (
-    <Modal onBackdropClick={onClose}>
+  const modalContent = (
+    <>
       <ul className={styles["cart-items"]}>{cartListItems}</ul>
       <div className={styles.total}>
         <span>Total Amount</span>
@@ -96,6 +100,17 @@ export default function Cart(props) {
       {shouldShowCheckout && (
         <Checkout onCancel={onClose} onPlaceOrder={placeOrder} />
       )}
+    </>
+  );
+
+  const isSubmittingContent = <p>Placing order...</p>;
+  const didSubmitContent = <p>Order placed!</p>;
+
+  return (
+    <Modal onBackdropClick={onClose}>
+      {!httpIsLoading && !didSubmit && modalContent}
+      {httpIsLoading && isSubmittingContent}
+      {!httpIsLoading && didSubmit && didSubmitContent}
     </Modal>
   );
 }

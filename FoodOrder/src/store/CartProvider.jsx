@@ -53,6 +53,8 @@ const cartReducer = (prevState, action) => {
         totalAmount: newTotalAmount,
       };
     }
+  } else if (action.type === "CLEAR") {
+    return DEFAULT_CART_STATE;
   }
   return DEFAULT_CART_STATE;
 };
@@ -68,11 +70,16 @@ export default function CartProvider(props) {
     setCartState({ type: "REMOVE_ITEM", itemId: itemId });
   };
 
+  const clearCart = () => {
+    setCartState({ type: "CLEAR" });
+  };
+
   const cartContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemToCart,
     removeItem: removeItemFromCart,
+    clearCart: clearCart
   };
 
   return (
