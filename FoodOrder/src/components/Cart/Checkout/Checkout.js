@@ -2,7 +2,7 @@ import useInput from "../../hooks/use-input";
 import styles from "./Checkout.module.css";
 
 const checkNotEmpty = (value) => value.trim() !== "";
-const numberRegex = new RegExp("^\\d+$");
+const numberRegex = new RegExp("^\\d{4,6}$");
 const checkOnlyNumbers = numberRegex.test.bind(numberRegex);
 
 const CheckoutInput = (props) => {
@@ -68,6 +68,12 @@ export default function Checkout(props) {
     if (!isFormValid) {
       return;
     }
+    props.onPlaceOrder({
+        name: name,
+        street: street,
+        postalCode: postalCode,
+        city: city
+    })
     resetName();
     resetStreet();
     resetCity();
@@ -101,7 +107,7 @@ export default function Checkout(props) {
         onChange={onPostalCodeChange}
         onBlur={onPostalCodeBlur}
         hasError={postalCodeHasError}
-        errorMessage="Postal Code must not be empty and only contain numbers"
+        errorMessage="Postal Code must contain between 4 and 6 digits"
       />
       <CheckoutInput
         id="city"

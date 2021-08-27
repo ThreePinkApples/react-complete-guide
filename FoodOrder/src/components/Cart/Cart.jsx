@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import CartContext from "../../store/cart-context";
+import useHttp from "../hooks/use-http";
 import Modal from "../UI/Modal/Modal";
 import styles from "./Cart.module.css";
 import CartItem from "./CartItem/CartItem";
@@ -32,6 +33,23 @@ export default function Cart(props) {
   const onClose = () => {
     setShouldShowCheckout(false);
     props.onClose();
+  };
+
+  const { sendRequest, isLoading: httpIsLoading, error: httpError } = useHttp();
+
+  const placeOrder = (customerInfo) => {
+    const order = {
+      customer: customerInfo,
+      item: cartContext.items,
+      totalAmount: totalAmount
+    };
+    sendRequest({
+      url: props.ordersUrl,
+      method: "POST",
+      body: order
+    }, (respondData) => {
+      console.log(respondData);
+    })
   };
 
   const cartListItems = items.map((item) => (
@@ -69,8 +87,10 @@ export default function Cart(props) {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {!shouldShowCheckout && actions }
-      {shouldShowCheckout && <Checkout onCancel={onClose} />}
+      {!shouldShowCheckout && actions}
+      {shouldShowCheckout && (
+        <Checkout onCancel={onClose} onPlaceOrder={placeOrder} />
+      )}
     </Modal>
   );
 }

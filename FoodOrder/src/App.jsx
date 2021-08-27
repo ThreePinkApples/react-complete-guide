@@ -21,8 +21,8 @@ export default function App() {
 
   return (
     <CartProvider>
-      {cartOpen && <Cart onClose={closeCart} />}
-      <Header openCart={openCart} ordersUrl={ordersUrl} />
+      {cartOpen && <Cart onClose={closeCart} ordersUrl={ordersUrl} />}
+      <Header openCart={openCart} />
       <main>
         <Meals mealsUrl={mealsUrl} ordersUrl={ordersUrl} />
       </main>
