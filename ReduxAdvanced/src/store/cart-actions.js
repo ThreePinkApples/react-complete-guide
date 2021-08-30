@@ -40,7 +40,12 @@ export const fetchCartData = () => {
       );
       return;
     }
-    dispatch(cartActions.replaceCart(cartData));
+    dispatch(
+      cartActions.replaceCart({
+        items: cartData.items || [],
+        totalAmount: cartData.totalAmount || 0,
+      })
+    );
   };
 };
 
