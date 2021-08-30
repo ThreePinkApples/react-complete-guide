@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cart-slice";
-import Card from "../UI/Card";
+import Card from "../UI/Card/Card";
 import styles from "./ProductItem.module.css";
 
 const ProductItem = (props) => {

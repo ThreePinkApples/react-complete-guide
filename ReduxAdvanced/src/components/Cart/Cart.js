@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import Card from "../UI/Card";
+import Card from "../UI/Card/Card";
 import styles from "./Cart.module.css";
 import CartItem from "./CartItem";
 
