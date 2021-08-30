@@ -4,7 +4,7 @@ import { counterActions } from "../store/counter-slice";
 
 const Counter = () => {
   const dispatch = useDispatch();
-  const { counter, showCounter } = useSelector((state) => state);
+  const { counter, showCounter } = useSelector((state) => state.counter);
 
   const incrementCounter = () => dispatch(counterActions.increment());
 
