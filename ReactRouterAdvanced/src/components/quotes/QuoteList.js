@@ -22,7 +22,10 @@ const QuoteList = (props) => {
 
   const changeSorting = () => {
     const newSort = isSortingAsc ? "desc" : "asc";
-    history.push(`${location.pathname}?sort=${newSort}`);
+    history.push({
+      pathname: location.pathname,
+      search: `sort=${newSort}`,
+    });
   };
 
   return (
