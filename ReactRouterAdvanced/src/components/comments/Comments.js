@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./Comments.module.css";
 import NewCommentForm from "./NewCommentForm";
 
-const Comments = () => {
+const Comments = (props) => {
   const [isAddingComment, setIsAddingComment] = useState(false);
 
   const startAddCommentHandler = () => {
@@ -17,7 +17,7 @@ const Comments = () => {
           Add a Comment
         </button>
       )}
-      {isAddingComment && <NewCommentForm />}
+      {isAddingComment && <NewCommentForm quoteId={props.quoteId} />}
       <p>Comments...</p>
     </section>
   );

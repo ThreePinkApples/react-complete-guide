@@ -53,7 +53,7 @@ export default function QuoteDetail() {
       <HighlightedQuote text={loadedQuote.text} author={loadedQuote.author} />
       <Switch>
         <Route path={`${routeMatch.path}/comments`}>
-          <Comments />
+          <Comments quoteId={loadedQuote.id} />
         </Route>
         <Route path="*">
           <div className="centered">
