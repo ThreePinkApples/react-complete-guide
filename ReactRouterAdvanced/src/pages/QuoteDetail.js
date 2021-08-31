@@ -48,6 +48,8 @@ export default function QuoteDetail() {
     return <NotFound message={"Comment not found"} />;
   }
 
+  const currentUrl = routeMatch.url.endsWith("/") ? routeMatch.url.slice(0, -1) : routeMatch.url;
+
   return (
     <>
       <HighlightedQuote text={loadedQuote.text} author={loadedQuote.author} />
@@ -57,7 +59,7 @@ export default function QuoteDetail() {
         </Route>
         <Route path="*">
           <div className="centered">
-            <Link to={`${routeMatch.url}/comments`} className="btn--flat">
+            <Link to={`${currentUrl}/comments`} className="btn--flat">
               Load comments
             </Link>
           </div>
