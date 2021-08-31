@@ -6,7 +6,7 @@ export default function QuoteDetail() {
   return (
     <>
       <p>{params.quoteId} - Such details</p>
-      <Route path="/quotes/:quoteId/comments">
+      <Route path={`/quotes/${params.quoteId}/comments`}>
         <Comments />
       </Route>
     </>
