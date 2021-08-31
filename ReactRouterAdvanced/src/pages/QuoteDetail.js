@@ -1,27 +1,38 @@
-import { Route, useParams, Link, Switch, useRouteMatch } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  Link, Route, Switch, useParams, useRouteMatch
+} from "react-router-dom";
 import Comments from "../components/comments/Comments";
 import HighlightedQuote from "../components/quotes/HighlightedQuote";
+import LoadingSpinner from "../components/UI/LoadingSpinner";
+import useHttp from "../hooks/use-http";
+import { getSingleQuote } from "../lib/api";
 import NotFound from "./NotFound";
-
-const DUMMY_QUOTES = [
-  {
-    id: "q1",
-    author: "Frank Frankensteen",
-    text: "I'm not the \"doctor\" you're looking for",
-  },
-  {
-    id: "q2",
-    author: "Henry Frankenstein",
-    text: "Monster? What monster? I see no monster.",
-  },
-];
 
 export default function QuoteDetail() {
   const params = useParams();
   const routeMatch = useRouteMatch();
-  const quote = DUMMY_QUOTES.find((quote) => quote.id === params.quoteId);
-  if (!quote) {
-    return <NotFound />;
+  const {
+    sendRequest: getQuote,
+    status: httpStatus,
+    data: quote,
+    error: httpError,
+  } = useHttp(getSingleQuote, true);
+
+  useEffect(() => {
+    getQuote(params.quoteId);
+  }, [getQuote, params]);
+
+  if (httpStatus === "pending") {
+    return (
+      <div className="centered">
+        <LoadingSpinner />
+      </div>
+    );
+  } else if (httpError) {
+    return <p className="centered focus">{httpError}</p>
+  } else if (!quote) {
+    return <NotFound message={"Comment not found"} />;
   }
 
   return (
