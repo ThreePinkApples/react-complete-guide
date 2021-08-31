@@ -49,6 +49,7 @@ const Comments = (props) => {
   return (
     <section className={styles.comments}>
       <h2>User Comments</h2>
+      {comments}
       {!isAddingComment && (
         <button className="btn" onClick={startAddCommentHandler}>
           Add a Comment
@@ -57,7 +58,6 @@ const Comments = (props) => {
       {isAddingComment && (
         <NewCommentForm quoteId={quoteId} onAddComment={onAddComment} />
       )}
-      {comments}
     </section>
   );
 };
