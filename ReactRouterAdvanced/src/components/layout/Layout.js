@@ -1,4 +1,3 @@
-import { props } from "bluebird";
 import styles from "./Layout.module.css";
 import MainNavigation from "./MainNavigation";
 
