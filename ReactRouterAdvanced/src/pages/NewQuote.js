@@ -1,3 +1,14 @@
+import QuoteForm from "../components/quotes/QuoteForm";
+
 export default function NewQuote() {
-  return <p>Very new, such fresh</p>;
+  const addQuote = (quote) => {
+    console.log(quote);
+  }
+
+  return (
+    <>
+      <h2>Add a quote</h2>
+      <QuoteForm onAddQuote={addQuote} />
+    </>
+  );
 }

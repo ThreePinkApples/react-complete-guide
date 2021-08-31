@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import Card from "../ui/Card";
-import LoadingSpinner from "../ui/LoadingSpinner";
+import Card from "../UI/Card";
+import LoadingSpinner from "../UI/LoadingSpinner";
 import styles from "./QuoteForm.module.css";
 
 const QuoteForm = (props) => {
