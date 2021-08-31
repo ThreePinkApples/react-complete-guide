@@ -1,4 +1,4 @@
-import { Route, useParams } from "react-router-dom";
+import { Route, useParams, Link, Switch } from "react-router-dom";
 import Comments from "../components/comments/Comments";
 import HighlightedQuote from "../components/quotes/HighlightedQuote";
 import NotFound from "./NotFound";
@@ -22,13 +22,23 @@ export default function QuoteDetail() {
   if (!quote) {
     return <NotFound />;
   }
+  const commentPath = `/quotes/${quote.id}/comments`;
 
   return (
     <>
       <HighlightedQuote text={quote.text} author={quote.author} />
-      <Route path={`/quotes/${quote.id}/comments`}>
-        <Comments />
-      </Route>
+      <Switch>
+        <Route path={commentPath}>
+          <Comments />
+        </Route>
+        <Route path="*">
+          <div className="centered">
+            <Link to={commentPath} className="btn--flat">
+              Load comments
+            </Link>
+          </div>
+        </Route>
+      </Switch>
     </>
   );
 }
