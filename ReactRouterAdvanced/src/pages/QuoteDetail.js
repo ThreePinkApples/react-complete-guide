@@ -1,6 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
-  Link, Route, Switch, useParams, useRouteMatch
+  Link,
+  Route,
+  Switch,
+  useParams,
+  useRouteMatch,
 } from "react-router-dom";
 import Comments from "../components/comments/Comments";
 import HighlightedQuote from "../components/quotes/HighlightedQuote";
@@ -12,16 +16,25 @@ import NotFound from "./NotFound";
 export default function QuoteDetail() {
   const params = useParams();
   const routeMatch = useRouteMatch();
+  const [loadedQuote, setLoadedQuote] = useState(null);
   const {
     sendRequest: getQuote,
     status: httpStatus,
-    data: quote,
+    data,
     error: httpError,
   } = useHttp(getSingleQuote, true);
 
   useEffect(() => {
-    getQuote(params.quoteId);
-  }, [getQuote, params]);
+    if (loadedQuote === null) {
+      getQuote(params.quoteId);
+    }
+  }, [getQuote, params, loadedQuote]);
+
+  useEffect(() => {
+    if (httpStatus === "completed") {
+      setLoadedQuote(data);
+    }
+  }, [httpStatus, data]);
 
   if (httpStatus === "pending") {
     return (
@@ -30,14 +43,14 @@ export default function QuoteDetail() {
       </div>
     );
   } else if (httpError) {
-    return <p className="centered focus">{httpError}</p>
-  } else if (!quote) {
+    return <p className="centered focus">{httpError}</p>;
+  } else if (!loadedQuote) {
     return <NotFound message={"Comment not found"} />;
   }
 
   return (
     <>
-      <HighlightedQuote text={quote.text} author={quote.author} />
+      <HighlightedQuote text={loadedQuote.text} author={loadedQuote.author} />
       <Switch>
         <Route path={`${routeMatch.path}/comments`}>
           <Comments />
