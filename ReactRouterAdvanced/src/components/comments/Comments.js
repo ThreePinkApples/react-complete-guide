@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useHttp from "../../hooks/use-http";
 import { getAllComments } from "../../lib/api";
 import LoadingSpinner from "../UI/LoadingSpinner";
@@ -24,10 +24,10 @@ const Comments = (props) => {
     setIsAddingComment(true);
   };
 
-  const onAddComment = () => {
+  const onAddComment = useCallback(() => {
     setIsAddingComment(false);
     sendRequest(quoteId);
-  };
+  }, [sendRequest, quoteId]);
 
   let comments;
   if (status === "pending") {
