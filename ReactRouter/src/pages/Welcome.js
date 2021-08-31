@@ -1,3 +1,12 @@
+import { Route } from "react-router-dom";
+
 export default function Welcome() {
-  return <h1>The Welcome Page</h1>;
+  return (
+    <section>
+      <h1>The Welcome Page</h1>
+      <Route path="/welcome/new-user">
+        <p>Go away!</p>
+      </Route>
+    </section>
+  );
 }
