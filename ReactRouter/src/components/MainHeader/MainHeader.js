@@ -2,12 +2,20 @@ import { NavLink } from "react-router-dom";
 import styles from "./MainHeader.module.css";
 
 export default function MainHeader() {
+  const ishomePageActive = (match, location) => {
+    return location && location.pathname === "/";
+  };
+
   return (
     <header className={styles.header}>
       <nav>
         <ul>
           <li>
-            <NavLink activeClassName={styles.active} to="/">
+            <NavLink
+              activeClassName={styles.active}
+              isActive={ishomePageActive}
+              to="/"
+            >
               Home
             </NavLink>
           </li>
@@ -18,7 +26,7 @@ export default function MainHeader() {
           </li>
           <li>
             <NavLink activeClassName={styles.active} to="/products">
-              Welcome
+              Products
             </NavLink>
           </li>
         </ul>
